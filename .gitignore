@@ -1,0 +1,4 @@
+*.zip
+.ipynb_checkpoints/
+bert/*
+!bert/.gitkeep

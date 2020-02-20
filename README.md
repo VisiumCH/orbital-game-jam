@@ -1,7 +1,7 @@
 # Orbital Game Jam – API
 ## Descriptions
 ### Sentiment classifier
-Returns the sentiment of the sentence.
+Returns the sentiment of a sentence.
 
 * **URL & Method**
 ```http
@@ -12,12 +12,31 @@ POST /get_sentiment
 
 | Parameter | Type | Description |
 | :--- | :--- | :--- |
-| `sentence` | `string` | **Required**. The sentence you want to classify |
+| `sentence` | `string` | **Required**. The sentence you want to classify. |
 
 * **Success Response:**
 
-**Code:** 200 <br />
+**Code:** 200
 **Content:** `{ sentiment : ["strongly_negative", "negative", "neutral", "positive", "strongly_positive"] }`
+
+### Toxicity classifier
+Returns the toxicity class of a sentence.
+
+* **URL & Method**
+```http
+POST /get_toxicity
+```
+  
+*  **Params**
+
+| Parameter | Type | Description |
+| :--- | :--- | :--- |
+| `sentence` | `string` | **Required**. The sentence you want to classify. |
+
+* **Success Response:**
+
+**Code:** 200
+**Content:** `{ toxicity : ["toxic", "obscene", "insult", "identity_hate"] }`
 
 
 ## Sample Calls:
@@ -57,7 +76,6 @@ if (entity != null) {
 ### Python – Book information retrieval
 ```python
 import requests
-...
 
 r = requests.post(
     'http://34.76.187.229:3000/get_information',
@@ -73,10 +91,8 @@ print(r.json())
 ### C# – Semantic similarity
 ```csharp
 using System.Net.Http;
-...
 
 private static readonly HttpClient client = new HttpClient();
-...
 
 var values = new Dictionary<string, string>
 {

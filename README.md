@@ -56,8 +56,8 @@ POST /get_similarity
 * **Success Response:**
 
 **Code:** 200 <br />
-**Content:** `{ similarity : [-1, 1] }` <br />
--1 means disimilar sentences while 1 means similar sentences, in terms of semantic.
+**Content:** `{ similarity : [-1, 1] (float) }` <br />
+-1 means dissimilar sentences while 1 means similar sentences, in terms of semantic.
 
 ## Sample Calls:
 _Warning: These sample calls may not be 100% accurate, the goal is rather to give you an idea about how to use the API in different languages._

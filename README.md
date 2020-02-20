@@ -16,7 +16,7 @@ POST /get_sentiment
 
 * **Success Response:**
 
-**Code:** 200
+**Code:** 200 <br />
 **Content:** `{ sentiment : ["strongly_negative", "negative", "neutral", "positive", "strongly_positive"] }`
 
 ### Toxicity classifier
@@ -35,9 +35,29 @@ POST /get_toxicity
 
 * **Success Response:**
 
-**Code:** 200
-**Content:** `{ toxicity : ["toxic", "obscene", "insult", "identity_hate"] }`
+**Code:** 200 <br />
+**Content:** `{ toxicity : ["non-toxic", "toxic", "obscene", "insult", "identity_hate"] }`
 
+### Semantic similarity
+Returns the similarity score of two sentences.
+
+* **URL & Method**
+```http
+POST /get_similarity
+```
+  
+*  **Params**
+
+| Parameter | Type | Description |
+| :--- | :--- | :--- |
+| `sentence_1` | `string` | **Required**. The first sentence you want to compare. |
+| `sentence_2` | `string` | **Required**. The second sentence you want to compare. |
+
+* **Success Response:**
+
+**Code:** 200 <br />
+**Content:** `{ similarity : [-1, 1] }` <br />
+-1 means disimilar sentences while 1 means similar sentences, in terms of semantic.
 
 ## Sample Calls:
 _Warning: These sample calls may not be 100% accurate, the goal is rather to give you an idea about how to use the API in different languages._
@@ -58,7 +78,7 @@ HttpClient httpclient = HttpClients.createDefault();
 HttpPost httppost = new HttpPost("http://34.76.187.229:3000/get_toxicity");
 
 // Request parameters and other properties.
-List<NameValuePair> params = new ArrayList<NameValuePair>(2);
+List<NameValuePair> params = new ArrayList<NameValuePair>(1);
 params.add(new BasicNameValuePair("sentence", "Am I toxic?"));
 httppost.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
 

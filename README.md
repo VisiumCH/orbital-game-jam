@@ -56,8 +56,28 @@ POST /get_similarity
 * **Success Response:**
 
 **Code:** 200 <br />
-**Content:** `{ similarity : [-1, 1] (float) }` <br />
--1 means dissimilar sentences while 1 means similar sentences, in terms of semantic.
+**Content:** `{ similarity : [-1, 1] }` <br />
+Floating number between -1 and 1, where -1 means dissimilar sentences while 1 means similar sentences, in terms of semantic.
+
+### Book information retrieval
+Returns the sentence most likely sentence in predefined books, from a list of keywords.
+
+* **URL & Method**
+```http
+POST /get_information
+```
+  
+*  **Params**
+
+| Parameter | Type | Description |
+| :--- | :--- | :--- |
+| `request` | `string` | **Required**. The list of keywords you are looking for separated by spaces, e.g. "wood dragon gold". |
+| `book` | `string` | **Required**. The name of a book you want to look into, can be an of `the_hobbit`, `the_great_gatsby`, `dune`, `1984` or `mobydick`. |
+
+* **Success Response:**
+
+**Code:** 200 <br />
+**Content:** `{ sentence : "Retrieved sentence from the book!" }`
 
 ## Sample Calls:
 _Warning: These sample calls may not be 100% accurate, the goal is rather to give you an idea about how to use the API in different languages._

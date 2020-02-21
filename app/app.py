@@ -1,7 +1,9 @@
 # API imports
 from flask import Flask, request
+import flask_monitoringdashboard as dashboard
 from config import Config
 from config import DevelopmentConfig
+
 
 # helpers
 import sys
@@ -17,6 +19,11 @@ from src.utils import load_books, predict_sentiment, predict_toxicity, get_embed
 
 #here the configurations of the Flask API are set
 app = Flask(__name__)
+
+#bind the API to a dashboard
+dashboard.bind(app)
+
+#set configurations
 developmentconfigurations=DevelopmentConfig()
 app.config['DEBUG']=developmentconfigurations.DEBUG
 

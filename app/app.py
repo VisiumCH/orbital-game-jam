@@ -5,12 +5,14 @@ from config import DevelopmentConfig
 
 # helpers
 import sys
-from sklearn.externals import joblib
+import joblib
+from pymagnitude import *
+
 
 sys.path.append('..')
 
 #external scripts imports for prediction purposes
-from src.utils import compute_similarity, load_books, predict_sentiment, predict_toxicity, get_embedding, get_information, check_user_input_information, check_user_input_prediction, check_user_input_similarity
+from src.utils import load_books, predict_sentiment, predict_toxicity, get_embedding, get_information, check_user_input_information, check_user_input_prediction, check_user_input_similarity,check_user_input_sum,  get_most_similar_words, get_words_sum
 
 
 #here the configurations of the Flask API are set
@@ -25,11 +27,40 @@ clf_sentiment = joblib.load('../src/models/sentiment.joblib')
 #load the embedding and sentences of the books
 books_dict = load_books()
 
-print(books_dict.keys())
+#load the word_to_vec space
+vectors_word_to_vec = Magnitude("../src/models/GoogleNews-vectors-negative300.magnitude.1")
+vectors_fasttest = Magnitude("../src/models/wiki-news-300d-1M-subword.magnitude")
 
+
+# endpoint to obtain result of words sum
+@app.route('/get_words_arithmetic',  methods=["POST"])
+def words_sum():
+
+    #get the input from the user
+    content=request.get_json()
+
+    #check request correctness
+    check = check_user_input_sum(content)
+
+
+    if check:
+
+        #get the word
+        positive_word_1 = content['positive_word_1']
+        positive_word_2 = content['positive_word_2']
+        negative_word = content['negative_word']
+
+        #get the most similar words
+        words = get_words_sum(positive_word_1, positive_word_2, negative_word, vectors_fasttest)
+
+        return {'word':words}
+    
+    else:
+
+        return {'word': 'Your request is wrong. Check the request format!'}
 
 # endpoint to obtain the similarity between two sentences
-@app.route('/get_similarity',  methods=["POST"])
+@app.route('/get_similar_words',  methods=["POST"])
 def similarity_prediction():
 
     #get the input from the user
@@ -38,21 +69,20 @@ def similarity_prediction():
     #check request correctness
     check = check_user_input_similarity(content)
 
+
     if check:
-        #get sentences
-        sentence_1 = content['sentence_1']
-        sentence_2 = content['sentence_2']
 
-        #get the vector embedding representation of the sentences
-        embeddings = get_embedding([sentence_1, sentence_2])
+        #get the word
+        word = content['word']
 
-        #compute the similarity between the embeddings
-        similarity = compute_similarity(embeddings[0], embeddings[1])
+        #get the most similar words
+        words = get_most_similar_words(word, vectors_word_to_vec)
 
-        return {'similarity':similarity}
+        return {'similar_words':words}
     
     else:
-        return {'similarity': 'Your request is wrong. Check the request format!'}
+
+        return {'similar_words': 'Your request is wrong. Check the request format!'}
 
 
 # endpoint to obtain the sentiment of sentence
@@ -125,7 +155,7 @@ def information_book():
     if check:
 
         #get sentence and book
-        sentence = content['information']
+        sentence = content['request']
         book_name = content['book']
 
         #get the vector embedding representation of the sentences

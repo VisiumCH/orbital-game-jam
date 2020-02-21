@@ -50,12 +50,34 @@ POST /get_similar_words
 
 | Parameter | Type | Description |
 | :--- | :--- | :--- |
-| `word` | `string` | **Required**. The first sentence you want to compare. |
+| `word` | `string` | **Required**. The word whose most similar words to obtain. |
 
 * **Success Response:**
 
 **Code:** 200 <br />
-**Content:** `{ similar_words : ['trees','pine_tree','oak_tree','evergreen_tree','fir_tree','willow_tree','pine_trees','maple_tree','sycamore_tree','tress'] }` <br />
+**Content:** `{ similar_words : ['cats', 'dog', 'kitten', 'feline', 'beagle'] }` <br />
+List of most similar words to one given to the API. The example shows the most similar words to tree.
+
+### Word arithmetic
+Combine words meaning to obtain the resulting word.
+
+* **URL & Method**
+```http
+POST /get_similar_words
+```
+  
+*  **Params**
+
+| Parameter | Type | Description |
+| :--- | :--- | :--- |
+| `positive_word_1` | `string` | **Required**. The first word you would like to add. |
+| `positive_word_2` | `string` | **Required**. The second word you would like to to add. |
+| `negative_word` | `string` | **Required**. The word you would like to substract. |
+
+* **Success Response:**
+
+**Code:** 200 <br />
+**Content:** `{ similar_words : ['cats', 'dog', 'kitten', 'feline', 'beagle'] }` <br />
 List of most similar words to one given to the API. The example shows the most similar words to tree.
 
 ### Book information retrieval

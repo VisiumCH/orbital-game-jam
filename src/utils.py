@@ -13,10 +13,34 @@ def check_user_input_similarity(request_input):
     if type(request_input) is dict:
 
         #check that the keys are correct
-        if list(request_input.keys())==['sentence_1', 'sentence_2']:
+        if list(request_input.keys())[0]=='word':
 
             #check the input is a string
-            if type(request_input['sentence_1'])=='str' and type(request_input['sentence_2'])=='str':
+
+            if type(request_input['word']) is str:
+                return True
+            
+            else:
+                return False
+            
+        else:
+            return False
+
+    else:
+        return False
+
+
+def check_user_input_sum(request_input):
+
+    #check that the input is a dictionary
+
+    if type(request_input) is dict:
+
+        #check that the keys are correct
+        if list(request_input.keys())==['positive_word_1', 'positive_word_2', 'negative_word']:
+
+            #check the input is a string
+            if type(request_input['positive_word_1']) is str and type(request_input['positive_word_2']) is str and type(request_input['negative_word']) is str:
                 return True
             
             else:
@@ -58,10 +82,10 @@ def check_user_input_information(request_input):
     if type(request_input) is dict:
 
         #check that the keys are correct
-        if list(request_input.keys())==['information', 'book']:
+        if list(request_input.keys())==['request', 'book']:
 
             #check the input is a string
-            if type(request_input['information']) is str and type(request_input['book']) is str:
+            if type(request_input['request']) is str and type(request_input['book']) is str:
                 return True
             
             else:
@@ -72,12 +96,6 @@ def check_user_input_information(request_input):
 
     else:
         return False
-
-#function to compute the cosine similarity between the embeddings corresponding to two different sentences
-def compute_similarity(query_vec1, query_vec2):
-
-    #calculate cosine angle
-    return (query_vec1 @ query_vec2.T) / (np.linalg.norm(query_vec1)*np.linalg.norm(query_vec2))
 
 #function to predict the sentiment of a sentence given its embedding
 def predict_sentiment(sentence_embedding, clf):
@@ -174,9 +192,36 @@ def get_information(sentence_embedding, book_name, books_dict):
     score = np.sum(emb_model * book_source[0], axis=1) / np.linalg.norm(book_source[0], axis=1)
 
     #get the indices of the top 5 answers
-    topk_idx = np.argsort(score)[::-1][:5]
+    topk_idx = np.argsort(score)[::-1][0]
 
     #get the list of the most appropriate information retrieved from the book
-    response = [book_source[1][i] for i in topk_idx]
+    response = book_source[1][topk_idx]
 
     return response
+
+#get the n most similar words to the one given
+def get_most_similar_words(word, vectors):
+
+    #get the most similar words to the one given
+    sims=vectors.most_similar(word, topn = 5) 
+
+    #obtain the words and discard the similarity score
+    response=[s[0] for s in sims]
+
+    return response
+
+#get words arithmentic result
+def get_words_sum(positive_word_1, positive_word_2, negative_word, vectors):
+
+    #get the options of the word sum
+    words_sum = vectors.most_similar(positive = [positive_word_1, positive_word_2], negative=[negative_word], topn = 1)
+
+    #obtain the words and discard the similarity score
+    response=words_sum[0][0]
+
+    return response
+
+
+    
+
+

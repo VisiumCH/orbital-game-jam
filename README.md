@@ -56,7 +56,7 @@ POST /get_similar_words
 
 **Code:** 200 <br />
 **Content:** `{ similar_words : ['cats', 'dog', 'kitten', 'feline', 'beagle'] }` <br />
-List of most similar words to one given to the API. The example shows the most similar words to tree.
+List of most similar words to one given to the API. The example shows the most similar words to `cat`.
 
 ### Word arithmetic
 Combine words meaning to obtain the resulting word.
@@ -77,8 +77,8 @@ POST /get_similar_words
 * **Success Response:**
 
 **Code:** 200 <br />
-**Content:** `{ similar_words : ['cats', 'dog', 'kitten', 'feline', 'beagle'] }` <br />
-List of most similar words to one given to the API. The example shows the most similar words to tree.
+**Content:** `{ word_sum : AirFrance }` <br />
+The word obtained by the addition of `France` and `Lufthansa` and the substraction of `Germany`.
 
 ### Book information retrieval
 Returns the sentence most likely sentence in predefined books, from a list of keywords.

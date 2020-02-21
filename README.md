@@ -157,8 +157,7 @@ private static readonly HttpClient client = new HttpClient();
 
 var values = new Dictionary<string, string>
 {
-  { "sentence_1", "hello" },
-  { "sentence_2", "world" }
+  { "word", "cat" }
 };
 
 var content = new FormUrlEncodedContent(values);

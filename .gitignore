@@ -3,3 +3,12 @@
 bert/*
 !bert/.gitkeep
 
+__pycache__/
+app/trial_requests
+src/classifiers
+src/models
+visualization/
+
+credentials.json
+
+

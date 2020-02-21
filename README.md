@@ -63,7 +63,7 @@ Combine words meaning to obtain the resulting word.
 
 * **URL & Method**
 ```http
-POST /get_similar_words
+POST /get_words_sum
 ```
   
 *  **Params**

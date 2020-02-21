@@ -77,7 +77,7 @@ POST /get_words_arithmetic
 * **Success Response:**
 
 **Code:** 200 <br />
-**Content:** `{ word_sum : AirFrance }` <br />
+**Content:** `{ word : AirFrance }` <br />
 The word obtained by the addition of `France` and `Lufthansa` and the substraction of `Germany`.
 
 ### Book information retrieval

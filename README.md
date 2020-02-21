@@ -86,7 +86,7 @@ _Warning: These sample calls may not be 100% accurate, the goal is rather to giv
 ```javascript
 fetch('http://34.76.187.229:3000/get_sentiment', {
     method: 'POST',
-    body: JSON.stringify({ sentence: 'I love Donaly Trump.' })
+    body: JSON.stringify({ sentence: 'I love Donald Trump.' })
 })
 .then(console.log)
 .catch(console.err)

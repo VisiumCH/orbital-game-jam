@@ -39,25 +39,24 @@ POST /get_toxicity
 **Content:** `{ toxicity : ["non-toxic", "toxic", "obscene", "insult", "identity_hate"] }`
 
 ### Semantic similarity
-Returns the similarity score of two sentences.
+Returns the most similar words to the one given.
 
 * **URL & Method**
 ```http
-POST /get_similarity
+POST /get_similar_words
 ```
   
 *  **Params**
 
 | Parameter | Type | Description |
 | :--- | :--- | :--- |
-| `sentence_1` | `string` | **Required**. The first sentence you want to compare. |
-| `sentence_2` | `string` | **Required**. The second sentence you want to compare. |
+| `word` | `string` | **Required**. The first sentence you want to compare. |
 
 * **Success Response:**
 
 **Code:** 200 <br />
-**Content:** `{ similarity : [-1, 1] }` <br />
-Floating number between -1 and 1, where -1 means dissimilar sentences while 1 means similar sentences, in terms of semantic.
+**Content:** `{ similar_words : ['trees','pine_tree','oak_tree','evergreen_tree','fir_tree','willow_tree','pine_trees','maple_tree','sycamore_tree','tress'] }` <br />
+List of most similar words to one given to the API. The example shows the most similar words to tree.
 
 ### Book information retrieval
 Returns the sentence most likely sentence in predefined books, from a list of keywords.

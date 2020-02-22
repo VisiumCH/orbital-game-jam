@@ -54,7 +54,7 @@ POST /get_information
 | Parameter | Type | Description |
 | :--- | :--- | :--- |
 | `request` | `string` | **Required**. The list of keywords you are looking for separated by spaces, e.g. "wood dragon gold". |
-| `book` | `string` | **Required**. The name of a book you want to look into, can be an of `the_hobbit`, `the_great_gatsby`, `dune`, `1984` or `mobydick`. |
+| `book` | `string` | **Required**. The name of a book you want to look into, can be an of `the_hobbit`, `the_great_gatsby`, `dune`, `1984` or `moby_dick`. |
 
 * **Success Response:**
 

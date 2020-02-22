@@ -6,52 +6,6 @@ import pickle
 from bert_serving.client import BertClient
 
 
-def check_user_input_similarity(request_input):
-
-    #check that the input is a dictionary
-
-    if type(request_input) is dict:
-
-        #check that the keys are correct
-        if list(request_input.keys())[0]=='word':
-
-            #check the input is a string
-
-            if type(request_input['word']) is str:
-                return True
-            
-            else:
-                return False
-            
-        else:
-            return False
-
-    else:
-        return False
-
-
-def check_user_input_sum(request_input):
-
-    #check that the input is a dictionary
-
-    if type(request_input) is dict:
-        
-        #check that the keys are correct
-        if set(request_input.keys())==set(['positive_word_1', 'positive_word_2', 'negative_word']):
-            
-            #check the input is a string
-            if type(request_input['positive_word_1']) is str and type(request_input['positive_word_2']) is str and type(request_input['negative_word']) is str:
-                return True
-            
-            else:
-                return False
-            
-        else:
-            return False
-
-    else:
-        return False
-
 def check_user_input_prediction(request_input):
 
     #check that the input is a dictionary
@@ -196,28 +150,6 @@ def get_information(sentence_embedding, book_name, books_dict):
 
     #get the list of the most appropriate information retrieved from the book
     response = book_source[1][topk_idx]
-
-    return response
-
-#get the n most similar words to the one given
-def get_most_similar_words(word, vectors):
-
-    #get the most similar words to the one given
-    sims=vectors.most_similar(word, topn = 5) 
-
-    #obtain the words and discard the similarity score
-    response=[s[0] for s in sims]
-
-    return response
-
-#get words arithmentic result
-def get_words_sum(positive_word_1, positive_word_2, negative_word, vectors):
-
-    #get the options of the word sum
-    words_sum = vectors.most_similar(positive = [positive_word_1, positive_word_2], negative=[negative_word], topn = 1)
-
-    #obtain the words and discard the similarity score
-    response=words_sum[0][0]
 
     return response
 

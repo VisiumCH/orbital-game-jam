@@ -8,20 +8,19 @@ from config import DevelopmentConfig, ProductionConfig
 # helpers
 import sys
 import joblib
-from pymagnitude import *
 
 
 sys.path.append('..')
 
 #external scripts imports for prediction purposes
-from src.utils import load_books, predict_sentiment, predict_toxicity, get_embedding, get_information, check_user_input_information, check_user_input_prediction, check_user_input_similarity,check_user_input_sum,  get_most_similar_words, get_words_sum
+from src.utils import load_books, predict_sentiment, predict_toxicity, get_embedding, get_information, check_user_input_information, check_user_input_prediction
 
 
 #here the configurations of the Flask API are set
 app = Flask(__name__)
 
 #bind the API to a dashboard
-#dashboard.bind(app)
+dashboard.bind(app)
 
 #set configurations
 productionconfigurations=ProductionConfig()
@@ -33,68 +32,6 @@ clf_sentiment = joblib.load('../src/models/sentiment.joblib')
 
 #load the embedding and sentences of the books
 books_dict = load_books()
-
-#load the word_to_vec space
-vectors_word_to_vec = Magnitude("../src/models/GoogleNews-vectors-negative300.magnitude", lazy_loading=-1, eager=True)
-#vectors_fasttest = Magnitude("../src/models/wiki-news-300d-1M-subword.magnitude", lazy_loading=-1, eager=True)
-
-
-@app.route('/badrequest398')
-def bad_request():
-        abort(398)
-
-# endpoint to obtain result of words sum
-@app.route('/get_words_arithmetic',  methods=["POST"])
-def words_sum():
-
-    #get the input from the user
-    content=request.get_json()
-
-    #check request correctness
-    check = check_user_input_sum(content)
-
-
-    if check:
-
-        #get the word
-        positive_word_1 = content['positive_word_1']
-        positive_word_2 = content['positive_word_2']
-        negative_word = content['negative_word']
-
-        #get the most similar words
-        words = get_words_sum(positive_word_1, positive_word_2, negative_word, vectors_fasttest)
-
-        return {'word':words}
-    
-    else:
-
-        return {'word': 'Your request is wrong. Check the request format!'}
-
-# endpoint to obtain the similarity between two sentences
-@app.route('/get_similar_words',  methods=["POST"])
-def similarity_prediction():
-    
-
-    #get the input from the user
-    content=request.get_json()
-    
-    #check request correctness
-    check = check_user_input_similarity(content)
-
-
-    if check:
-
-        #get the word
-        word = content['word']
-        
-        #get the most similar words
-        words = get_most_similar_words(word, vectors_word_to_vec)
-
-        return {'similar_words':words}
-    
-    else:
-
-        return {'similar_words': 'Your request is wrong. Check the request format!'}
 
 
 # endpoint to obtain the sentiment of sentence
@@ -123,7 +60,7 @@ def sentiment_prediction():
     
     else:
 
-        return {'sentiment': 'Your request is wrong. Check the request format!'}
+        abort(400)
 
 
 # enpoint to obtain the toxicity of a sentence
@@ -151,7 +88,7 @@ def toxicity_prediction():
     
     else:
 
-        return {'toxicity': 'Your request is wrong. Check the request format!'}
+        abort(400)
 
 
 # endpoint to obtain the information from a book
@@ -181,10 +118,10 @@ def information_book():
     
     else:
 
-        return {'sentence': 'Your request is wrong. Check the request format!'}
+        abort(400)
 
 
 if __name__ == '__main__':
 
     #set threaded to True to handle multiple queries
-    app.run(threaded=False, host='0.0.0.0', port=3000)
+    app.run(threaded=True, host='0.0.0.0', port=3000)

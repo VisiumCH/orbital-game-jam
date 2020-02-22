@@ -102,8 +102,8 @@ import requests
 r = requests.post(
     'http://bigbrain.internet-box.ch:3000/get_information',
     data={
-        'request': 'wood escape',
-        'book': 'the_great_gatsby'
+        'request': 'love ministry duty',
+        'book': '1984'
     })
 
 print(r.status_code, r.reason)
@@ -119,8 +119,8 @@ private static readonly HttpClient client = new HttpClient();
 var values = new Dictionary<string, string>
 {
     {
-    'request': 'wood escape',
-    'book': 'the_great_gatsby'
+    'request': 'love ministry duty',
+    'book': '1984'
     }
 };
 

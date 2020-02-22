@@ -1,8 +1,8 @@
 # API imports
-from flask import Flask, request
+from flask import Flask, request, abort
 import flask_monitoringdashboard as dashboard
 from config import Config
-from config import DevelopmentConfig
+from config import DevelopmentConfig, ProductionConfig
 
 
 # helpers
@@ -21,11 +21,11 @@ from src.utils import load_books, predict_sentiment, predict_toxicity, get_embed
 app = Flask(__name__)
 
 #bind the API to a dashboard
-dashboard.bind(app)
+#dashboard.bind(app)
 
 #set configurations
-developmentconfigurations=DevelopmentConfig()
-app.config['DEBUG']=developmentconfigurations.DEBUG
+productionconfigurations=ProductionConfig()
+app.config['DEBUG']=productionconfigurations.DEBUG
 
 #load the prediction models
 clf_toxicity = joblib.load('../src/models/toxicity.joblib')
@@ -35,9 +35,13 @@ clf_sentiment = joblib.load('../src/models/sentiment.joblib')
 books_dict = load_books()
 
 #load the word_to_vec space
-vectors_word_to_vec = Magnitude("../src/models/GoogleNews-vectors-negative300.magnitude.1")
-vectors_fasttest = Magnitude("../src/models/wiki-news-300d-1M-subword.magnitude")
+vectors_word_to_vec = Magnitude("../src/models/GoogleNews-vectors-negative300.magnitude", lazy_loading=-1, eager=True)
+#vectors_fasttest = Magnitude("../src/models/wiki-news-300d-1M-subword.magnitude", lazy_loading=-1, eager=True)
 
+
+@app.route('/badrequest398')
+def bad_request():
+        abort(398)
 
 # endpoint to obtain result of words sum
 @app.route('/get_words_arithmetic',  methods=["POST"])
@@ -69,10 +73,11 @@ def words_sum():
 # endpoint to obtain the similarity between two sentences
 @app.route('/get_similar_words',  methods=["POST"])
 def similarity_prediction():
+    
 
     #get the input from the user
     content=request.get_json()
-
+    
     #check request correctness
     check = check_user_input_similarity(content)
 
@@ -81,7 +86,7 @@ def similarity_prediction():
 
         #get the word
         word = content['word']
-
+        
         #get the most similar words
         words = get_most_similar_words(word, vectors_word_to_vec)
 
@@ -182,4 +187,4 @@ def information_book():
 if __name__ == '__main__':
 
     #set threaded to True to handle multiple queries
-    app.run(threaded=True)
+    app.run(threaded=False, host='0.0.0.0', port=3000)

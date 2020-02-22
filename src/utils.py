@@ -35,10 +35,10 @@ def check_user_input_sum(request_input):
     #check that the input is a dictionary
 
     if type(request_input) is dict:
-
+        
         #check that the keys are correct
-        if list(request_input.keys())==['positive_word_1', 'positive_word_2', 'negative_word']:
-
+        if set(request_input.keys())==set(['positive_word_1', 'positive_word_2', 'negative_word']):
+            
             #check the input is a string
             if type(request_input['positive_word_1']) is str and type(request_input['positive_word_2']) is str and type(request_input['negative_word']) is str:
                 return True
@@ -82,7 +82,7 @@ def check_user_input_information(request_input):
     if type(request_input) is dict:
 
         #check that the keys are correct
-        if list(request_input.keys())==['request', 'book']:
+        if set(request_input.keys())==set(['request', 'book']):
 
             #check the input is a string
             if type(request_input['request']) is str and type(request_input['book']) is str:

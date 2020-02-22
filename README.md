@@ -1,4 +1,6 @@
 # Orbital Game Jam – API
+Base URL: `bigbrain.internet-box.ch`
+
 ## Descriptions
 ### Sentiment classifier
 Returns the sentiment of a sentence.
@@ -64,7 +66,7 @@ _Warning: These sample calls may not be 100% accurate, the goal is rather to giv
 
 ### Javascript – Sentiment classifier
 ```javascript
-fetch('http://34.76.187.229:3000/get_sentiment', {
+fetch('http://bigbrain.internet-box.ch:3000/get_sentiment', {
     method: 'POST',
     body: JSON.stringify({ sentence: 'I love Donald Trump.' })
 })
@@ -75,7 +77,7 @@ fetch('http://34.76.187.229:3000/get_sentiment', {
 ### Java – Toxicity classifier
 ```java
 HttpClient httpclient = HttpClients.createDefault();
-HttpPost httppost = new HttpPost("http://34.76.187.229:3000/get_toxicity");
+HttpPost httppost = new HttpPost("http://bigbrain.internet-box.ch:3000/get_toxicity");
 
 // Request parameters and other properties.
 List<NameValuePair> params = new ArrayList<NameValuePair>(1);
@@ -98,7 +100,7 @@ if (entity != null) {
 import requests
 
 r = requests.post(
-    'http://34.76.187.229:3000/get_information',
+    'http://bigbrain.internet-box.ch:3000/get_information',
     data={
         'request': 'wood escape',
         'book': 'the_great_gatsby'
@@ -123,6 +125,6 @@ var values = new Dictionary<string, string>
 };
 
 var content = new FormUrlEncodedContent(values);
-var response = await client.PostAsync("http://34.76.187.229:3000/get_information", content);
+var response = await client.PostAsync("http://bigbrain.internet-box.ch:3000/get_information", content);
 var responseString = await response.Content.ReadAsStringAsync();
 ```

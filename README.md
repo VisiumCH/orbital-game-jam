@@ -116,15 +116,7 @@ using System.Net.Http;
 
 private static readonly HttpClient client = new HttpClient();
 
-var values = new Dictionary<string, string>
-{
-    {
-    'request': 'love ministry duty',
-    'book': '1984'
-    }
-};
-
-var content = new FormUrlEncodedContent(values);
-var response = await client.PostAsync("http://34.65.4.90:3000/get_information", content);
-var responseString = await response.Content.ReadAsStringAsync();
+StringContent content = new StringContent("{\"sentence\":\"I love you\"}", System.Text.Encoding.UTF8, "application/json");
+HttpResponseMessage response = await client.PostAsync("http://34.65.4.90:3000/get_sentiment", content);
+string responseString = await response.Content.ReadAsStringAsync();
 ```

@@ -1,5 +1,5 @@
 # Orbital Game Jam – API
-Base URL: `http://34.65.4.90`
+Base URL and port: `http://34.65.4.90:3000`
 
 ## Descriptions
 ### Sentiment classifier
